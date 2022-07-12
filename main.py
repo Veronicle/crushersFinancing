@@ -11,41 +11,65 @@ class item:
         self.customized = customized
         self.payDayWeek = payDayWeek
 
+    def getSalePrice(self):
+        return self.salePrice
+    
+    def getRetailPrice(self):
+        return self.retailPrice
+
 class seller:
 
-    inventory = []
-    inventoryTiming = []
+    pendingInventory = []
+    soldInventory = []
+    pendingInventoryTiming = []
+    soldInventoryTiming = []
 
     def __init__(self, name, receivedMoney): 
         self.name = name
         self.receivedMoney = receivedMoney
+    
+    def getReceivedMoney(self):
+        return self.receivedMoney
 
-    def newItemSold(object, month, day, year):
-        seller.inventory.append(item.object)
-        date = "" + month +"/" + date + "/" + year
-        seller.inventoryTiming.append(date)
+    def getName(self):
+        return self.name
 
-    def getStatistics():
-        salesCount = seller.inventory.len()
+    def newOrder(self, Object, month, day, year):
+        seller.pendingInventory.append(Object)
+        date = "" + str(month) +"/" + str(day) + "/" + str(year) 
+        seller.pendingInventoryTiming.append(date)
+
+    def itemSold(self, Object, month, day, year):
+        seller.soldInventory.append(Object)
+        date = "" + str(month) +"/" + str(day) + "/" + str(year)
+        seller.soldInventoryTiming.append(date)
+
+    def getStatistics(self):
+        salesCount = len(seller.soldInventory)
         salesValue = 0
         retailValue = 0
         for i in range(salesCount):
-            salesValue += seller.inventory.index(i).salePrice
-            retailValue += seller.inventory.index(i).retailPrice
+            salesValue += (seller.soldInventory[i]).getSalePrice()
+            retailValue += (seller.soldInventory[i]).getRetailPrice()
         profit = salesValue - retailValue
-        transferMoney = profit - seller.receivedMoney
-        return "Seller: " + seller.name + "\nSales Count: " + str(salesCount) + "\nProfit: $" + str(profit) + "\nMoney to be transferred: $" + str(transferMoney)
-
+        transferMoney = profit - seller.getReceivedMoney(self)
+        return "Seller: " + seller.getName(self) + "\nSales Count: " + str(salesCount) + "\nProfit: $" + str(profit) + "\nMoney to be transferred: $" + str(transferMoney)
+"""
 # salesmen
 Araash = seller("Araash", 240)
 i1 = item("Chaitanya", "T-Shirt", "White", "Small", "Large", 20, 3.2, True, 1)
-Araash.newItemSold(i1, 6, 5, 2022)
-Araash.getStatistics()
+Araash.itemSold(i1, 6, 5, 2022)
+i2 = item("Boris", "T-Shirt", "White", "Small", "Large", 20, 3.2, True, 1)
+Araash.itemSold(i2, 1, 2, 3)
+# print(dir(Araash)) => shows all possible emthods for Araash
+print(Araash.getStatistics())
 
 Henrik = seller("Henrik", 60)
 Patrick = seller("Patrick", 30)
 Kenny = seller("Kenny", 375)
 Ronit = seller("Ronit", 140)
+"""
+
 
 
 
